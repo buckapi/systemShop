@@ -1,0 +1,252 @@
+<div class="dashboard-main-wrapper">
+    
+    <div class="dashboard-body">
+        <div class="row gy-4">
+            <div class="col-lg-9">
+                <!-- Grettings Box Start -->
+                <div
+                    class="grettings-box position-relative rounded-16 bg-main-600 overflow-hidden gap-16 flex-wrap z-1">
+                    <img src="assets/images/bg/grettings-pattern.png" alt=""
+                        class="position-absolute inset-block-start-0 inset-inline-start-0 z-n1 w-100 h-100 opacity-6">
+                    <div class="row gy-4">
+                        <div class="col-sm-7">
+                            <div class="grettings-box__content py-xl-4">
+                                <h2 class="text-white mb-0">Welcome! </h2>
+                                <p class="text-15 fw-light mt-4 text-white">Quality Detailing Automotive LLC</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-5 d-sm-block d-none">
+                            <div class="text-center h-100 d-flex justify-content-center align-items-end ">
+                                <img src="assets/images/thumbs/gretting-img.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Grettings Box End -->
+
+                <!-- Hour Spent Card Start -->
+                <div class="card mt-24 overflow-hidden">
+                    <div class="card-header">
+                        <div class="mb-0 flex-between flex-wrap gap-8">
+                            <h4 class="mb-0">Aprovaciones</h4>
+                            <div class="flex-align gap-16 flex-wrap">
+                                <div class="flex-align flex-wrap gap-16">
+                                    <div class="flex-align flex-wrap gap-8">
+                                        <span class="w-8 h-8 rounded-circle bg-main-two-600"></span>
+                                        <span class="text-13 text-gray-600">Tecnico</span>
+                                    </div>
+                                    <div class="flex-align flex-wrap gap-8">
+                                        <span class="w-8 h-8 rounded-circle bg-main-two-200"></span>
+                                        <span class="text-13 text-gray-600">Supervisor</span>
+                                    </div>
+                                </div>
+                               <!--  <select class="form-select form-control text-13 px-8 pe-24 py-8 rounded-8 w-auto">
+                                    <option value="1">Yearly</option>
+                                    <option value="1">Monthly</option>
+                                    <option value="1">Weekly</option>
+                                    <option value="1">Today</option>
+                                </select> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="stackedColumnChart"></div>
+                    </div>
+                </div>
+                <!-- Hour Spent Card End -->
+
+                <!-- Table Start -->
+                <div class="card mt-24 overflow-hidden">
+                    <div class="card-header">
+                        <div class="mb-0 flex-between flex-wrap gap-8">
+                            <h4 class="mb-0">Work Instructions</h4>
+                            <a 
+                                class="text-13 fw-medium text-main-600 hover-text-decoration-underline">See All</a>
+                        </div>
+                    </div>
+                    <div class="card-body p-0 overflow-x-auto scroll-sm scroll-sm-horizontal">
+                        <table class="table style-two mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Company Name</th>
+                                    <th>Progress</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let workInstruction of (realtimeWorkInstructions.workInstructions$ | async)">
+                                    <td>
+                                        <div class="flex-align gap-8">
+                                            <div
+                                                class="w-40 h-40 rounded-circle bg-main-600 flex-center flex-shrink-0">
+                                                <img src="assets/images/icons/course-name-icon1.png" alt="">
+                                            </div>
+                                            <div class="">
+                                                <h6 class="mb-0">{{workInstruction.companyName}}</h6>
+                                                <div class="table-list">
+                                                    <span class="text-13 text-gray-600">{{workInstruction.contactName}}</span>
+                                                    <span class="text-13 text-gray-600">{{workInstruction.mobile}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="flex-align gap-8 mt-12">
+                                            <div class="progress w-100px  bg-main-100 rounded-pill h-4"
+                                                role="progressbar" aria-label="Basic example" [attr.aria-valuenow]="workInstruction.progress"
+                                                aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar bg-main-600 rounded-pill"
+                                                    [style.width]="workInstruction.progress + '%'"></div>
+                                            </div>
+                                            <span class="text-main-600 flex-shrink-0 text-13 fw-medium">{{workInstruction.progress}}%</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="flex-align justify-content-center gap-16">
+                                            <span
+                                                class="text-13 py-2 px-8 bg-warning-50 text-warning-600 d-inline-flex align-items-center gap-8 rounded-pill">
+                                                <span
+                                                    class="w-6 h-6 bg-warning-600 rounded-circle flex-shrink-0"></span>
+                                                {{workInstruction.status}}
+                                            </span>
+                                            <!-- <a (click)="viewWorkInstruction(+workInstruction.id)"
+                                                class="text-gray-900 hover-text-main-600 text-md d-flex cursor-pointer"><i
+                                                    class="ph ph-caret-right"></i></a> -->
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Table End -->
+
+            </div>
+            <div class="col-lg-3">
+
+                
+
+                <!-- Donut Chart Start -->
+                <div class="card mt-24">
+                    <div class="card-header border-bottom border-gray-100 flex-between gap-8 flex-wrap">
+                        <h5 class="mb-0">Proceso de actividades</h5>
+                        <div class="dropdown flex-shrink-0">
+                            <button class="text-gray-400 text-xl d-flex rounded-4" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="ph-fill ph-dots-three-outline"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu--md border-0 bg-transparent p-0">
+                                <div class="card border border-gray-100 rounded-12 box-shadow-custom">
+                                    <div class="card-body p-12">
+                                        <div class="max-h-200 overflow-y-auto scroll-sm pe-8">
+                                            <ul>
+                                                <li class="mb-0">
+                                                    <a 
+                                                        class="py-6 text-15 px-8 hover-bg-gray-50 text-gray-300 w-100 rounded-8 fw-normal text-xs d-block text-start">
+                                                        <span class="text"> <i class="ph ph-user me-4"></i>
+                                                            Ver</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="flex-center">
+                            <div id="activityDonutChart" class="w-auto d-inline-block"></div>
+                        </div>
+
+                        <div class="flex-between gap-8 flex-wrap mt-24">
+                            <div class="flex-align flex-column">
+                                <span
+                                    class="w-12 h-12 bg-white border border-3 border-main-600 rounded-circle"></span>
+                                <span class="text-13 my-4 text-main-600">Iniciado</span>
+                                <h6 class="mb-0">65.2%</h6>
+                            </div>
+                            
+                            <div class="flex-align flex-column">
+                                <span
+                                    class="w-12 h-12 bg-white border border-3 border-warning-600 rounded-circle"></span>
+                                <span class="text-13 my-4 text-warning-600">En proceso</span>
+                                <h6 class="mb-0">9.8%</h6>
+                            </div>
+                            <div class="flex-align flex-column">
+                                <span
+                                    class="w-12 h-12 bg-white border border-3 border-main-two-600 rounded-circle"></span>
+                                <span class="text-13 my-4 text-main-two-600">Finalizado</span>
+                                <h6 class="mb-0">25.0%</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Donut Chart End -->
+
+                <!-- Community Groups card Start -->
+                <div class="card mt-24">
+                    <div class="card-body">
+                        <div class="mb-20 flex-between flex-wrap gap-8">
+                            <h4 class="mb-0">Nuevas solicitudes</h4>
+                            <a 
+                                class="w-28 h-28 flex-center bg-gray-50 rounded-circle text-gray-600 hover-bg-gray-100"><i
+                                    class="ph ph-plus"></i></a>
+                        </div>
+                        <div
+                            class="p-xl-4 py-16 px-12 flex-between gap-8 rounded-8 border border-gray-100 hover-border-gray-200 transition-1 mb-16">
+                            <div class="flex-align flex-wrap gap-8">
+                                <span
+                                    class="text-main-600 bg-main-50 w-44 h-44 rounded-circle flex-center text-2xl flex-shrink-0"><i
+                                        class="ph-fill ph-graduation-cap"></i></span>
+                                <div>
+                                    <h6 class="mb-0">Design Community, USA</h6>
+                                    
+                                </div>
+                            </div>
+                            <a  class="text-gray-900 hover-text-main-600"><i
+                                    class="ph ph-caret-right"></i></a>
+                        </div>
+                        <div
+                            class="p-xl-4 py-16 px-12 flex-between gap-8 rounded-8 border border-gray-100 hover-border-gray-200 transition-1 mb-16">
+                            <div class="flex-align flex-wrap gap-8">
+                                <span
+                                    class="text-dribble-600 bg-dribble-50 w-44 h-44 rounded-circle flex-center text-2xl flex-shrink-0"><i
+                                        class="ph ph-dribbble-logo"></i></span>
+                                <div>
+                                    <h6 class="mb-0">Dribbble Global Groups</h6>
+                                   
+                                </div>
+                            </div>
+                            <a  class="text-gray-900 hover-text-main-600"><i
+                                    class="ph ph-caret-right"></i></a>
+                        </div>
+                        <div
+                            class="p-xl-4 py-16 px-12 flex-between gap-8 rounded-8 border border-gray-100 hover-border-gray-200 transition-1">
+                            <div class="flex-align flex-wrap gap-8">
+                                <span
+                                    class="text-purple-600 bg-purple-50 w-44 h-44 rounded-circle flex-center text-2xl flex-shrink-0"><i
+                                        class="ph ph-chart-line-up"></i></span>
+                                <div>
+                                    <h6 class="mb-0">Marketing Support Group</h6>
+                                    
+                                </div>
+                            </div>
+                            <a  class="text-gray-900 hover-text-main-600"><i
+                                    class="ph ph-caret-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Community Groups card End -->
+
+            </div>
+        </div>
+    </div>
+    <div class="dashboard-footer">
+        <div class="flex-between flex-wrap gap-16">
+            <p class="text-gray-300 text-13 fw-normal"> &copy; Buckapi</p>
+
+        </div>
+    </div>
+</div>
