@@ -4,27 +4,27 @@
         
         <!-- Header y botón de agregar -->
         <div class="d-flex align-items-center justify-content-between">
-          <h4 [hidden]="showForm" class="mb-20">Supervisors</h4>
+          <h4 [hidden]="showForm" class="mb-20">  Inventario</h4>
           <button 
             *ngIf="!showForm"
-            (click)="showNewSupervisor()"
+            (click)="showNewProduct()"
             type="button"
             class="btn btn-main text-sm btn-sm px-24 rounded-pill py-12 d-flex align-items-center gap-2">
             <i class="ph ph-plus me-4"></i>
-            Add New Supervisor
+            Agregar nuevo producto
           </button>
         </div>
   
         <!-- Tarjetas de Supervisores -->
         <div class="row g-20 pt-24" [hidden]="showForm">
-          <div class="col-xl-3 col-md-4 col-sm-6" *ngFor="let supervisor of (realtimeSupervisors.supervisors$ | async)">
+          <div class="col-xl-3 col-md-4 col-sm-6" *ngFor="let product of (realtimeInventoryProducts.products$ | async)">
             <div class="mentor-card rounded-8 overflow-hidden">
               <div class="mentor-card__cover position-relative">
                 <img src="assets/images/thumbs/mentor-cover-img1.png" alt="" class="cover-img">
-                <button type="button" class="follow-btn py-2 px-8 flex-align gap-4 text-13 fw-medium text-white border border-white rounded-pill position-absolute inset-block-start-0 inset-inline-end-0 mt-8 me-8 transition-1"> 
+                <!-- <button type="button" class="follow-btn py-2 px-8 flex-align gap-4 text-13 fw-medium text-white border border-white rounded-pill position-absolute inset-block-start-0 inset-inline-end-0 mt-8 me-8 transition-1"> 
                   <i class="ph ph-plus d-flex"></i> 
                   <span class="text">Follow</span>
-                </button>
+                </button> -->
               </div>
               <div class="mentor-card__content text-center">
                 <div class="w-56 h-56 rounded-circle overflow-hidden border border-white d-inline-block">
@@ -33,19 +33,19 @@
                   </a>
                 </div>
                 <h5 class="mb-0">
-                  <a href="setting.html">{{ supervisor.name }}</a>
+                  <a href="setting.html">{{ product.name }}</a>
                 </h5>
-                <span class="text-13 text-gray-500">{{ supervisor.role }}</span>
-                <p class="mt-20 text-gray-600 text-14 text-line-2">{{ supervisor.description }}</p>
+                <span class="text-13 text-gray-500">{{ product.role }}</span>
+                <p class="mt-20 text-gray-600 text-14 text-line-2">{{ product.description }}</p>
                 <div class="mentor-card__rating mt-20 border border-gray-100 px-8 py-6 rounded-8 flex-between flex-wrap">
                   <div class="flex-align gap-4">
                     <span class="text-15 fw-normal text-main-600 d-flex"><i class="ph-fill ph-book-open"></i></span>
-                    <span class="text-13 fw-normal text-gray-600">{{ supervisor.tasks }} Tasks</span>
+                    <span class="text-13 fw-normal text-gray-600">{{ product.tasks }} Tasks</span>
                   </div>
                   <div class="flex-align gap-4">
                     <span class="text-15 fw-normal text-warning-600 d-flex"><i class="ph-fill ph-star"></i></span>
-                    <span class="text-13 fw-normal text-gray-600">{{ supervisor.rating }}</span>
-                    <span class="text-13 fw-normal text-gray-600">({{ supervisor.reviews }} Reviews)</span>
+                    <span class="text-13 fw-normal text-gray-600">{{ product.rating }}</span>
+                    <span class="text-13 fw-normal text-gray-600">({{ product.reviews }} Reviews)</span>
                   </div>
                 </div>
               </div>
@@ -56,24 +56,24 @@
         <!-- Formulario de Nuevo Supervisor -->
         <div class="card mt-24" [hidden]="!showForm">
           <div class="card-header border-bottom">
-            <h4 class="mb-4">New Supervisor</h4>
-            <p class="text-gray-600 text-15">Fill in all supervisor data</p>
+            <h4 class="mb-4">Nuevo producto</h4>
+            <p class="text-gray-600 text-15">Ingrese todos los datos del producto</p>
           </div>
           <div class="card-body">
-            <form [formGroup]="supervisorForm" (ngSubmit)="addNewSupervisor()">
+            <form [formGroup]="productForm" (ngSubmit)="addProduct()">
               <div class="row gy-4">
                 <div class="col-sm-6 col-xs-6">
-                  <label for="fname" class="form-label mb-8 h6">First Name</label>
-                  <input formControlName="fname" type="text" class="form-control py-11" id="fname" placeholder="Enter First Name">
+                  <label for="name" class="form-label mb-8 h6">Nombre</label>
+                  <input formControlName="name" type="text" class="form-control py-11" id="name" placeholder="Enter First Name">
                 </div>
                 
-                <div class="col-sm-6 col-xs-6">
+               <!--  <div class="col-sm-6 col-xs-6">
                   <label for="email" class="form-label mb-8 h6">Email</label>
                   <input formControlName="email" type="email" class="form-control py-11" id="email" placeholder="Enter Email">
-                </div>
+                </div> -->
                 
                 <div class="col-sm-6 col-xs-6">
-                  <label for="phone" class="form-label mb-8 h6">Phone Number</label>
+                  <label for="phone" class="form-label mb-8 h6">Codigo</label>
                   <input formControlName="phone" type="number" class="form-control py-11" id="phone" placeholder="Enter Phone Number">
                 </div>
                 
@@ -98,7 +98,7 @@
                 <div class="col-12">
                   <div class="flex-align justify-content-end gap-8">
                     <button type="button" (click)="showForm=false" class="btn btn-outline-main bg-main-100 border-main-100 text-main-600 rounded-pill py-9">Cancel</button>
-                    <button type="submit" class="btn btn-main rounded-pill py-9">Save Changes</button>
+                    <button type="submit" class="btn btn-main rounded-pill py-9">Guardar</button>
                   </div>
                 </div>
               </div>

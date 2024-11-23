@@ -37,7 +37,38 @@ export class AuthPocketbaseService {
       }
       return password;
     }
-
+ /*    addProduct(email: string, name: string, address: string, phone: string): Observable<any> {
+      const password = this.generateRandomPassword();
+      
+      const userData = {
+        email: email,
+        password: password,
+        passwordConfirm: password,
+        type: 'producto',
+        username: name,
+        name: name
+      };
+  
+      return from(
+        this.pb.collection('users').create(userData).then((user) => {
+          const productData = {
+            name: name,
+            // address: address,
+            phone: phone,
+            email: email,
+            userId: user.id, // Asigna el userId devuelto por PocketBase
+            // status: 'active', // Estado del supervisor, puedes cambiarlo según tus necesidades
+            // otros campos que quieras agregar
+          };
+          return this.pb.collection('products').create(productData);
+        })
+      ).pipe(
+        map((response) => ({
+          productData: response,
+          password: password // Devuelve la contraseña generada si necesitas mostrarla o guardarla
+        }))
+      );
+    } */
     addSupervisor(email: string, name: string, address: string, phone: string): Observable<any> {
       const password = this.generateRandomPassword();
       

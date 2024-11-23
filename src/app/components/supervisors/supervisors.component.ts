@@ -4,8 +4,9 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthPocketbaseService } from '../../services/auth-pocketbase.service';
 import Swal from 'sweetalert2';
-import { RealtimeSupervisorsService } from '../../services/realtime-supervisors.service';
-interface Supervisor {
+import { RealtimeProductsService } from '../../services/realtime-invetaryProductos.service';
+import { DataApiService } from '../../services/data-api.service';
+interface Product {
   name: string;
   role: string;
   description: string;
@@ -22,9 +23,9 @@ interface Supervisor {
 })
 export class SupervisorsComponent {
   showForm: boolean = false;
-  supervisorForm: FormGroup;
+  productForm: FormGroup;
   previewImage: string = 'assets/images/thumbs/setting-profile-img.jpg';
-  supervisors: Supervisor[] = [
+  products: Product[] = [
     {
       name: 'Maria Prova',
       role: 'Content Writer',
@@ -47,22 +48,22 @@ export class SupervisorsComponent {
     public global: GlobalService,
     private fb: FormBuilder,
     public auth: AuthPocketbaseService,
-    public realtimeSupervisors: RealtimeSupervisorsService
-
+    public realtimeInventoryProducts: RealtimeProductsService,
+    public dataApiService: DataApiService
   ) { 
-    this.realtimeSupervisors.supervisors$;
+    this.realtimeInventoryProducts.products$;
 
     // Configurar el formulario con validadores
-    this.supervisorForm = this.fb.group({
-      fname: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+    this.productForm = this.fb.group({
+      name: ['', Validators.required],
+/*       email: ['', [Validators.required, Validators.email]],
+ */      phone: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       image: [null]
     });
   }
 
   // Alternar la visibilidad del formulario
-  showNewSupervisor() {
+  showNewProduct() {
     this.showForm = !this.showForm;
   }
 
@@ -70,45 +71,51 @@ export class SupervisorsComponent {
   onFileChange(event: any) {
     const file = event.target.files[0];
     if (file) {
-      this.supervisorForm.patchValue({ image: file });
+      this.productForm.patchValue({ image: file });
       this.previewImage = URL.createObjectURL(file);
     }
   }
 
-  // Enviar el formulario para agregar un nuevo supervisor
-  addNewSupervisor() {
-    if (this.supervisorForm.invalid) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Formulario inválido',
-        text: 'Por favor, completa todos los campos correctamente.'
-      });
-      return;
+  addProduct() {
+    if (this.productForm.valid) {
+      const request = {
+        email: this.productForm.get('email')?.value || '',
+        name: this.productForm.get('name')?.value || '',
+        address: this.productForm.get('address')?.value || '',
+        phone: this.productForm.get('phone')?.value || '',
+        collection: 'productsInventory'
+      };
+
+      this.dataApiService.addProduct(request).subscribe(
+        response => {
+          console.log('Producto guardado exitosamente:', response);
+          
+          // Ocultar el formulario y mostrar la lista de productos
+          this.showForm = false;
+          
+          // Actualizar la lista de productos (asumiendo que tienes un método para esto)
+          this.realtimeInventoryProducts.products$;
+
+          Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: 'El producto ha sido guardado exitosamente.',
+            confirmButtonText: 'Aceptar'
+          });
+
+          this.productForm.reset();
+        },
+        error => {
+          console.error('Error al guardar el producto:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Hubo un problema al guardar el producto. Por favor, inténtalo de nuevo.',
+            confirmButtonText: 'Aceptar'
+          });
+        }
+      );
     }
-
-    const { fname, email, phone } = this.supervisorForm.value;
-    const address = ''; // Añade la dirección si es necesario
-
-    // Llamar al servicio para crear el supervisor
-    this.auth.addSupervisor(email, fname, address, phone).subscribe({
-      next: (result) => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Supervisor creado',
-          text: `Supervisor creado exitosamente. Contraseña generada: ${result.password}`
-        });
-        this.supervisorForm.reset();
-        this.previewImage = 'assets/images/thumbs/setting-profile-img.jpg';
-        this.showForm = false;
-      },
-      error: (error) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Hubo un error al crear el supervisor.'
-        });
-        console.error('Error al crear el supervisor:', error);
-      }
-    });
   }
+  
 }

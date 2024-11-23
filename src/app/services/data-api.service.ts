@@ -5,8 +5,10 @@ import { map} from 'rxjs/operators';
 import { FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { WorkInstructionService } from './work-instruction.service';
-
+import { ProductService } from './product.service';
 export interface workInstructionsInterface{
+}
+export interface productInterface{
 }
 @Injectable({
   providedIn: 'root'
@@ -32,4 +34,15 @@ export class DataApiService {
 		  map(data => data)
 		);
 	  }
+  
+  addProduct(request: productInterface) {
+    const url_api = this.baseUrl + '/collections/productsInventory/records';
+		return this.http.post<productInterface>(url_api, request).pipe(
+		  map(data => data)
+		);
+	  }
+   
+  getAllProducts(): Observable<ProductService []> {
+    return this.http.get<ProductService[]>(`${this.baseUrl}/collections/products/records`);
+  }
 }

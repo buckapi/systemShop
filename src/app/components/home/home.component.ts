@@ -47,9 +47,11 @@ export class HomeComponent   {
   ){     this.realtimeSupervisors.supervisors$;
          /* this.loadWorkInstructions(); */
          this.realtimeWorkInstructions.workInstructions$;
-
+         this.dataApiService.getAllProducts();
    
   }
+
+  
   /* ngOnInit() {    
     this.loadWorkInstructions();
   }

@@ -10,19 +10,19 @@
               <a  class="auth-right__logo">
                 <img src="assets/images/logo/logo.png" alt="">
               </a>
-              <h2 class="mb-8">Welcome! </h2>
-              <p class="text-gray-600 text-15 mb-32">Please sign in to your account</p>
+              <h2 class="mb-8">Bienvenidos! </h2>
+              <p class="text-gray-600 text-15 mb-32">Por favor, ingrese su cuenta</p>
           
               <!-- Formulario de inicio de sesión -->
               <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
                 <div class="mb-24">
-                  <label for="email" class="form-label mb-8 h6">Email or Username</label>
+                  <label for="email" class="form-label mb-8 h6">Correo electrónico o nombre de usuario</label>
                   <div class="position-relative">
                     <input
                       type="text"
                       class="form-control py-11 ps-40"
                       id="email"
-                      placeholder="Type your username"
+                      placeholder="Ingrese su correo electrónico o nombre de usuario"
                       formControlName="email"
                     />
                     <span class="position-absolute top-50 translate-middle-y ms-16 text-gray-600 d-flex">
@@ -32,13 +32,13 @@
                 </div>
               
                 <div class="mb-24">
-                    <label for="password" class="form-label mb-8 h6">Current Password</label>
+                    <label for="password" class="form-label mb-8 h6">Contraseña</label>
                     <div class="position-relative">
                       <input
                         [type]="passwordVisible ? 'text' : 'password'" 
                         class="form-control py-11 ps-40"
                         id="password"
-                        placeholder="Enter Current Password"
+                        placeholder="Ingrese su contraseña"
                         formControlName="password"
                       />
                       <span 
@@ -72,11 +72,11 @@
                 <!-- Mensaje de error -->
                 <div *ngIf="errorMessage" class="text-danger mb-3">{{ errorMessage }}</div>
               
-                <button type="submit" class="btn btn-main rounded-pill w-100" [disabled]="loginForm.invalid">Sign In</button>
+                <button type="submit" class="btn btn-main rounded-pill w-100" [disabled]="loginForm.invalid">Iniciar sesión</button>
                 
-                <p class="mt-32 text-gray-600 text-center">New on our platform?
+                <!-- <p class="mt-32 text-gray-600 text-center">New on our platform?
                   <a (click)="global.setRoute('register')" class="text-main-600 hover-text-decoration-underline">Create an account</a>
-                </p>
+                </p> -->
               </form>
               
             </div>
