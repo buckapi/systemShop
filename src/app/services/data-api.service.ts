@@ -45,4 +45,10 @@ export class DataApiService {
   getAllProducts(): Observable<ProductService []> {
     return this.http.get<ProductService[]>(`${this.baseUrl}/collections/products/records`);
   }
+  updateProduct(id: string, request: productInterface) {
+    const url_api = this.baseUrl + `/collections/products/records/${id}`;
+		return this.http.put<productInterface>(url_api, request).pipe(
+		  map(data => data)
+		);
+	  }
 }

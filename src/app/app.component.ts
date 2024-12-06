@@ -9,15 +9,16 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './components/login/login.component';
 import { FormRequestComponent } from "./components/form-request/form-request.component";
 import { AuthPocketbaseService } from './services/auth-pocketbase.service';
-import { SupervisorsComponent } from './components/supervisors/supervisors.component';
 import { TechnicalsComponent } from './components/technicals/technicals.component';
 import { WorkInstructionsComponent } from './components/work-instructions/work-instructions.component';
 import { HttpClientModule } from '@angular/common/http'; 
+import { ProductsComponent } from './components/products/products.component';
+import { EmployeesComponent } from './components/employees/employees.component';
+import { CashComponent } from './components/cash/cash.component';
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    SupervisorsComponent,
     CommonModule,
     RouterOutlet,
     HomeComponent,
@@ -28,7 +29,10 @@ import { HttpClientModule } from '@angular/common/http';
     FormRequestComponent,
     TechnicalsComponent,
     WorkInstructionsComponent,
-    HttpClientModule
+    HttpClientModule,
+    ProductsComponent,
+    EmployeesComponent,
+    CashComponent
   ],
  
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

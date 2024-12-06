@@ -1,63 +1,46 @@
 import { Component } from '@angular/core';
 import { GlobalService } from '../../services/global.service';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { AuthPocketbaseService } from '../../services/auth-pocketbase.service';
-import Swal from 'sweetalert2';
-import { RealtimeProductsService } from '../../services/realtime-invetaryProductos.service';
 import { DataApiService } from '../../services/data-api.service';
-interface Product {
-  name: string;
-  role: string;
-  description: string;
-  tasks: number;
-  rating: number;
-  reviews: number;
-}
+import { AuthPocketbaseService } from '../../services/auth-pocketbase.service';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
+import { RealtimeProductsService } from '../../services/realtime-productos.service';
 @Component({
-  selector: 'app-supervisors',
+  selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './supervisors.component.html',
-  styleUrls: ['./supervisors.component.css']
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  templateUrl: './products.component.html',
+  styleUrl: './products.component.css'
 })
-export class SupervisorsComponent {
+export class ProductsComponent {
   showForm: boolean = false;
   productForm: FormGroup;
   previewImage: string = 'assets/images/thumbs/setting-profile-img.jpg';
-  products: Product[] = [
-    {
-      name: 'Maria Prova',
-      role: 'Content Writer',
-      description: 'Experienced content writer with a focus on UX writing.',
-      tasks: 45,
-      rating: 4.8,
-      reviews: 750
-    },
-    {
-      name: 'Alex John',
-      role: 'Web Developer',
-      description: 'Specialized in front-end development with Angular and React.',
-      tasks: 30,
-      rating: 4.7,
-      reviews: 500
-    },
-    // Agrega más supervisores según sea necesario
-  ];
+  products: any[] = []; // Changed Product to any[] since Product type is not defined
+  products$: any;
+  isEditing: boolean = false; 
+  currentProductId: string = '';
   constructor(
     public global: GlobalService,
     private fb: FormBuilder,
     public auth: AuthPocketbaseService,
-    public realtimeInventoryProducts: RealtimeProductsService,
-    public dataApiService: DataApiService
+    public realtimeProducts: RealtimeProductsService,
+    public dataApiService: DataApiService,
   ) { 
-    this.realtimeInventoryProducts.products$;
+    this.realtimeProducts.products$;
 
     // Configurar el formulario con validadores
     this.productForm = this.fb.group({
       name: ['', Validators.required],
-/*       email: ['', [Validators.required, Validators.email]],
- */      phone: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      description: ['', Validators.required],
+      unity: ['', Validators.required],
+      price: ['', Validators.required],
+      code: ['', Validators.required],
       image: [null]
     });
   }
@@ -79,11 +62,12 @@ export class SupervisorsComponent {
   addProduct() {
     if (this.productForm.valid) {
       const request = {
-        email: this.productForm.get('email')?.value || '',
         name: this.productForm.get('name')?.value || '',
-        address: this.productForm.get('address')?.value || '',
-        phone: this.productForm.get('phone')?.value || '',
-        collection: 'productsInventory'
+        collection: 'productsInventory',
+        description: this.productForm.get('description')?.value || '',
+        unity: this.productForm.get('unity')?.value || '',
+        price: this.productForm.get('price')?.value || '',
+        code: this.productForm.get('code')?.value || '',
       };
 
       this.dataApiService.addProduct(request).subscribe(
@@ -94,7 +78,7 @@ export class SupervisorsComponent {
           this.showForm = false;
           
           // Actualizar la lista de productos (asumiendo que tienes un método para esto)
-          this.realtimeInventoryProducts.products$;
+          this.realtimeProducts.products$;
 
           Swal.fire({
             icon: 'success',
@@ -117,5 +101,34 @@ export class SupervisorsComponent {
       );
     }
   }
-  
+
+  updateProduct() {
+    this.dataApiService.updateProduct(this.currentProductId, this.productForm.value).subscribe(
+      response => {
+        console.log('Producto actualizado exitosamente:', response);
+      }
+    );
+  }
+
+  /* async editProduct(product: any) {
+    this.isEditing = true;
+    this.showForm = true;
+    
+    this.productForm.patchValue({
+      name: product.name,
+      code: product.code,
+      description: product.description,
+      unity: product.unity,
+      price: product.price
+    });
+    this.previewImage = product.image;
+  } */
+
+  cancelEdit() {
+    this.showForm = false;
+    this.isEditing = false;
+    this.productForm.reset();
+    this.previewImage = '';
+  }
+
 }

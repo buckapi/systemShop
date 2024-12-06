@@ -37,66 +37,34 @@ export class AuthPocketbaseService {
       }
       return password;
     }
- /*    addProduct(email: string, name: string, address: string, phone: string): Observable<any> {
+
+    addEmployee(email: string, name: string,  phone: string): Observable<any> {
       const password = this.generateRandomPassword();
       
       const userData = {
         email: email,
         password: password,
         passwordConfirm: password,
-        type: 'producto',
+        type: 'empleado',
         username: name,
         name: name
       };
   
       return from(
         this.pb.collection('users').create(userData).then((user) => {
-          const productData = {
+          const employeeData = {
             name: name,
-            // address: address,
             phone: phone,
             email: email,
             userId: user.id, // Asigna el userId devuelto por PocketBase
             // status: 'active', // Estado del supervisor, puedes cambiarlo según tus necesidades
             // otros campos que quieras agregar
           };
-          return this.pb.collection('products').create(productData);
+          return this.pb.collection('employees').create(employeeData);
         })
       ).pipe(
         map((response) => ({
-          productData: response,
-          password: password // Devuelve la contraseña generada si necesitas mostrarla o guardarla
-        }))
-      );
-    } */
-    addSupervisor(email: string, name: string, address: string, phone: string): Observable<any> {
-      const password = this.generateRandomPassword();
-      
-      const userData = {
-        email: email,
-        password: password,
-        passwordConfirm: password,
-        type: 'supervisor',
-        username: name,
-        name: name
-      };
-  
-      return from(
-        this.pb.collection('users').create(userData).then((user) => {
-          const supervisorData = {
-            name: name,
-            // address: address,
-            phone: phone,
-            email: email,
-            userId: user.id, // Asigna el userId devuelto por PocketBase
-            // status: 'active', // Estado del supervisor, puedes cambiarlo según tus necesidades
-            // otros campos que quieras agregar
-          };
-          return this.pb.collection('supervisors').create(supervisorData);
-        })
-      ).pipe(
-        map((response) => ({
-          supervisorData: response,
+          employeeData: response,
           password: password // Devuelve la contraseña generada si necesitas mostrarla o guardarla
         }))
       );
@@ -174,9 +142,9 @@ export class AuthPocketbaseService {
     return userType === '"tecnico"';
   }
 
-  isSupervisor() {
+  isEmployee() {
     const userType = localStorage.getItem('type');
-    return userType === '"supervisor"';
+    return userType === '"empleado"';
   }
 
   isCustomer() {
@@ -213,8 +181,8 @@ export class AuthPocketbaseService {
           };
           if (type === 'cliente') {
             return this.pb.collection('customer').create(data);
-          } else if (type === 'supervisor') {
-            return this.pb.collection('supervisor').create(data);
+          } else if (type === 'empleado') {
+            return this.pb.collection('employee').create(data);
           } else if (type === 'tecnico') {
             return this.pb.collection('technical').create(data);
           } else {
@@ -339,10 +307,10 @@ export class AuthPocketbaseService {
           this.global.setRoute('home'); // Redirigir al cliente a la página principal
           break;
         case 'tecnico':
-          this.global.setRoute('dashboard-tecnico'); // Redirigir al panel de técnico
+          this.global.setRoute('home'); // Redirigir al panel de técnico
           break;
-        case 'supervisor':
-          this.global.setRoute('dashboard-supervisor'); // Redirigir al panel de supervisor
+        case 'empleado':
+          this.global.setRoute('home'); // Redirigir al panel de supervisor
           break;
         default:
           console.warn('Tipo de usuario no reconocido');

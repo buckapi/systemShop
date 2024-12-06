@@ -25,7 +25,7 @@ export class RealtimeProductsService implements OnDestroy {
       .authWithPassword('admin@email.com', 'admin1234');
 
     // Suscribirse a cambios en cualquier registro de la colección 'supervisors'
-    this.pb.collection('products').subscribe('*', (e) => {
+    this.pb.collection('productsInventory').subscribe('*', (e) => {
       this.handleRealtimeEvent(e);
     });
 
@@ -45,7 +45,7 @@ export class RealtimeProductsService implements OnDestroy {
   private async updateProductsList() {
     // Obtener la lista actualizada de productos
     const records = await this.pb
-      .collection('products')
+      .collection('productsInventory')
       .getFullList(200 /* cantidad máxima de registros */, {
         sort: '-created', // Ordenar por fecha de creación
       });
@@ -54,6 +54,6 @@ export class RealtimeProductsService implements OnDestroy {
 
   ngOnDestroy() {
     // Desuscribirse cuando el servicio se destruye
-    this.pb.collection('products').unsubscribe('*');
+    this.pb.collection('productsInventory').unsubscribe('*');
   }
 }
