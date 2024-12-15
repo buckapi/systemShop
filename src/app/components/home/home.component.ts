@@ -7,6 +7,8 @@ import { AuthPocketbaseService } from '../../services/auth-pocketbase.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { RealtimeProductsService } from '../../services/realtime-productos.service';
+import { HttpClient } from '@angular/common/http';
+import { RealtimeEmployeesService } from '../../services/realtime-employees.service';
 
 interface WorkInstruction {
     id: string | number; 
@@ -41,6 +43,7 @@ interface User {
 export class HomeComponent   {
   workInstructions: WorkInstruction[] = [];
   products: any[] = [];
+  employees: any[] = [];
   form = new FormGroup({
     code: new FormControl('')
     });
@@ -49,17 +52,24 @@ export class HomeComponent   {
   constructor(
     public global: GlobalService,
     public auth: AuthPocketbaseService,
-    private dataApiService: DataApiService,
-    private router: Router,
-    private realtimeProducts: RealtimeProductsService
+    public dataApiService: DataApiService,
+    public realtimeProducts: RealtimeProductsService,
+    private http: HttpClient,
+    public realtimeEmployees: RealtimeEmployeesService
   ){    
         
-         this.dataApiService.getAllProducts();
-   
+         this.dataApiService.getAllProducts();  
   }
 
   
-  ngOnInit() {    
-    this.realtimeProducts.products$;
+  ngOnInit() {
+    // Suscribirse a los cambios en tiempo real de los productos
+    this.realtimeProducts.products$.subscribe(products => {
+      this.products = products;
+    });
+
+    this.realtimeEmployees.employees$.subscribe(employees => {
+      this.employees = employees;
+    });
   }
 }

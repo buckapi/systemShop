@@ -36,8 +36,17 @@
                                     <div id="complete-course" class="remove-tooltip-title rounded-tooltip-value"></div>
                                 </div>
                                 
-                                <h4 class="mb-2">{{products.length}}</h4>
+                               <!--  <h4 class="mb-2">{{products.length}}</h4>
+                                <span class="text-gray-300">Productos</span> -->
+                                <h4 class="mb-2">
+                                <ng-container *ngIf="products !== undefined; else loading">
+                                    {{products.length}}
+                                </ng-container>
+                                <ng-template #loading>
+                                    <span>Cargando...</span>
+                                </ng-template>
                                 <span class="text-gray-300">Productos</span>
+                                </h4>
                             </div>
                         </div>
                     </div>
@@ -49,8 +58,17 @@
                                     <div id="earned-certificate" class="remove-tooltip-title rounded-tooltip-value"></div>
                                 </div>
                                 
-                                <h4 class="mb-2"></h4>
-                                <span class="text-gray-300">Empleados</span>
+                                <!-- <h4 class="mb-2"></h4>
+                                <span class="text-gray-300">Empleados</span> -->
+                                <h4 class="mb-2">
+                                    <ng-container *ngIf="employees !== undefined; else loading">
+                                        {{employees.length}}
+                                    </ng-container>
+                                    <ng-template #loading>
+                                        <span>Cargando...</span>
+                                    </ng-template>
+                                    <span class="text-gray-300">Empleados</span>
+                                    </h4>
                             </div>
                         </div>
                     </div>
