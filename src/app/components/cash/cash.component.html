@@ -1,159 +1,175 @@
 <div class="dashboard-main-wrapper">
-    <div class="top-navbar flex-between gap-16">
-        <div class="dashboard-body">
-            <div class="breadcrumb-with-buttons mb-24 flex-between flex-wrap gap-8">
-                <!-- Breadcrumb Start -->
-                <div class="breadcrumb mb-24">
-                    <ul class="flex-align gap-4">
-                        <li><a (click)="global.setRoute('home')" style="cursor: pointer;" class="text-gray-200 fw-normal text-15 hover-text-main-600">Inicio</a></li>
-                        <li> <span class="text-gray-500 fw-normal d-flex"><i class="ph ph-caret-right"></i></span> </li>
-                        <li><span class="text-main-600 fw-normal text-15">Caja</span></li>
-                    </ul>
+    <div class="top-navbar  gap-16">
+        <div class="row">
+            <div class="col-12" style="text-align: right;">
+                <div class="fecha-hora">
+                    <span class="fecha">{{fechaActual}}</span> /
+                    <span class="hora ms-2">{{horaActual}}</span>
                 </div>
-                <!-- Breadcrumb End -->
-
-                <!-- Buttons Start -->
-                <!-- <div class="flex-align justify-content-end gap-8">
-                    <button type="button"
-                        class="btn btn-outline-main bg-main-100 border-main-100 text-main-600 rounded-pill py-9">Save as
-                        Draft</button>
-                    <button type="button" class="btn btn-main rounded-pill py-9" disabled>Publish Course</button>
-                </div> -->
-                <!-- Buttons End -->
             </div>
+            <div class="flex-align gap-16 col-8">
+                <h1>Caja registradora</h1>
 
-            <!-- Create Course Step List Start -->
-            <ul class="step-list mb-24">
-                <li class="step-list__item py-15 px-24 text-15 text-heading fw-medium flex-center gap-6  active">
-                    <span class="icon text-xl d-flex"><i class="ph ph-circle"></i></span>
-                    Productos
-                    <span class="line position-relative"></span>
-                </li>
-                <li class="step-list__item py-15 px-24 text-15 text-heading fw-medium flex-center gap-6  ">
-                    <span class="icon text-xl d-flex"><i class="ph ph-circle"></i></span>
-                    Venta
-                    <span class="line position-relative"></span>
-                </li>
-               <!--  <li class="step-list__item py-15 px-24 text-15 text-heading fw-medium flex-center gap-6  ">
-                    <span class="icon text-xl d-flex"><i class="ph ph-circle"></i></span>
-                    About Course
-                    <span class="line position-relative"></span>
-                </li>
-                <li class="step-list__item py-15 px-24 text-15 text-heading fw-medium flex-center gap-6  ">
-                    <span class="icon text-xl d-flex"><i class="ph ph-circle"></i></span>
-                    Create Quiz
-                    <span class="line position-relative"></span>
-                </li>
-                <li class="step-list__item py-15 px-24 text-15 text-heading fw-medium flex-center gap-6  ">
-                    <span class="icon text-xl d-flex"><i class="ph ph-circle"></i></span>
-                    Publish Course
-                    <span class="line position-relative"></span>
-                </li> -->
-            </ul>
-            <!-- Create Course Step List End -->
-
-            <!-- Course Tab Start -->
-            <div class="card">
-                <div class="card-header border-bottom border-gray-100 flex-align gap-8">
-                    <h5 class="mb-0">Course Details</h5>
-                    <button type="button" class="text-main-600 text-md d-flex" data-bs-toggle="tooltip" data-bs-placement="top"
-                        data-bs-title="Course Details">
-                        <i class="ph-fill ph-question"></i>
-                    </button>
+                <!-- resto de tu código -->
+            </div>
+            <div class="dashboard-body">
+                <div class="breadcrumb-with-buttons mb-24 flex-between flex-wrap gap-8">
+                    <!-- Breadcrumb Start -->
+                    <div class="breadcrumb mb-24">
+                        <ul class="flex-align gap-4">
+                            <li><a (click)="global.setRoute('home')" style="cursor: pointer;"
+                                    class="text-gray-200 fw-normal text-15 hover-text-main-600">Inicio</a></li>
+                            <li> <span class="text-gray-500 fw-normal d-flex"><i class="ph ph-caret-right"></i></span>
+                            </li>
+                            <li><span class="text-main-600 fw-normal text-15">Caja</span></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <form action="create-course.html#">
-                        <div class="row gy-20">
-                            <div class="col-xxl-3 col-md-4 col-sm-5">
-                                <div class="mb-20">
-                                    <label class="h5 fw-semibold font-heading mb-0">Thumbnail Image <span
-                                            class="text-13 text-gray-400 fw-medium">(Required)</span> </label>
-                                </div>
-                                <div id="fileUpload" class="fileUpload image-upload"></div>
+
+                <ul class="step-list mb-24">
+                    <li class="step-list__item py-15 px-24 text-15 text-heading fw-medium flex-center gap-6"
+                        [ngClass]="{'active': pasoActual === 1}">
+                        <span class="icon text-xl d-flex"><i class="ph ph-circle"></i></span>
+                        Productos
+                        <span class="line position-relative"></span>
+                    </li>
+                    <li class="step-list__item py-15 px-24 text-15 text-heading fw-medium flex-center gap-6"
+                        [ngClass]="{'active': pasoActual === 2}">
+                        <span class="icon text-xl d-flex"><i class="ph ph-circle"></i></span>
+                        Procesar pago
+                        <span class="line position-relative"></span>
+                    </li>
+                    <li class="step-list__item py-15 px-24 text-15 text-heading fw-medium flex-center gap-6"
+                        [ngClass]="{'active': pasoActual === 3}">
+                        <span class="icon text-xl d-flex"><i class="ph ph-circle"></i></span>
+                        Imprimir factura
+                        <span class="line position-relative"></span>
+                    </li>
+                </ul>
+            </div>
+            <div class="flex-align gap-16 col-8">
+                <form class="w-350 d-sm-block d-none">
+                    <!-- cash.component.html -->
+                    <div class="position-relative">
+                        <!-- Input de búsqueda -->
+                        <form class="w-350 d-sm-block d-none">
+                            <div class="position-relative">
+                                <button type="submit"
+                                    class="input-icon text-xl d-flex text-gray-100 pointer-event-none">
+                                    <i class="ph ph-magnifying-glass"></i>
+                                </button>
+                                <input type="text"
+                                    class="form-control ps-40 h-40 border-transparent focus-border-main-600 bg-main-50 rounded-pill placeholder-15"
+                                    placeholder="Buscar producto por nombre o código" [(ngModel)]="searchTerm"
+                                    (input)="onSearchChange($event)" name="search">
                             </div>
-                            <div class="col-xxl-9 col-md-8 col-sm-7">
-                                <div class="row g-20">
-                                    <div class="col-sm-12">
-                                        <label for="courseTitle" class="h5 mb-8 fw-semibold font-heading">Thumbnail Image <span
-                                                class="text-13 text-gray-400 fw-medium">(Required)</span> </label>
-                                        <div class="position-relative">
-                                            <input type="text" class="text-counter placeholder-13 form-control py-11 pe-76"
-                                                maxlength="100" id="courseTitle" placeholder="Name of the Lesson">
-                                            <div
-                                                class="text-gray-400 position-absolute inset-inline-end-0 top-50 translate-middle-y me-16">
-                                                <span id="current">18</span>
-                                                <span id="maximum">/ 100</span>
-                                            </div>
+                        </form>
+
+                        <!-- Lista de productos filtrados -->
+                        <div class="productos-filtrados position-absolute w-100 mt-2"
+                            style="background: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); z-index: 1000;"
+                            *ngIf="productosFiltrados.length > 0 && searchTerm">
+                            <div class="list-group">
+                                <div *ngFor="let producto of productosFiltrados"
+                                    class="list-group-item list-group-item-action cursor-pointer"
+                                    style="padding: 10px 15px; border-bottom: 1px solid #eee;"
+                                    (click)="seleccionarProducto(producto)">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <strong>{{producto.name}}</strong>
+                                            <br>
+                                            <small>Código: {{producto.code}}</small>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label for="courseCategory" class="h5 mb-8 fw-semibold font-heading">Course Category
-                                        </label>
-                                        <div class="position-relative">
-                                            <select id="courseCategory" class="form-select py-9 placeholder-13 text-15">
-                                                <option value="1" disabled selected>Enter course category</option>
-                                                <option value="2">Computer Science </option>
-                                                <option value="2">Business </option>
-                                                <option value="2">Management </option>
-                                                <option value="2">Humanities </option>
-                                                <option value="2">Data Science</option>
-                                                <option value="2">Artificial Intelligence</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label for="courseLevel" class="h5 mb-8 fw-semibold font-heading">Course Level</label>
-                                        <div class="position-relative">
-                                            <select id="courseLevel" class="form-select py-9 placeholder-13 text-15">
-                                                <option value="1" disabled selected>Select course level</option>
-                                                <option value="2">Course Level 1</option>
-                                                <option value="2">Course Level 2</option>
-                                                <option value="2">Course Level 3</option>
-                                                <option value="2">Course Level 4</option>
-                                                <option value="2">Course Level 5</option>
-                                                <option value="2">Course Level 6</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label for="courseTime" class="h5 mb-8 fw-semibold font-heading">Course Time</label>
-                                        <div class="position-relative">
-                                            <select id="courseTime" class="form-select py-9 placeholder-13 text-15">
-                                                <option value="1" disabled selected>Enter course category</option>
-                                                <option value="2">5 Hours</option>
-                                                <option value="2">10 Hours</option>
-                                                <option value="2">15 Hours</option>
-                                                <option value="2">20 Hours</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label for="courseLesson" class="h5 mb-8 fw-semibold font-heading">Total Lesson</label>
-                                        <div class="position-relative">
-                                            <select id="courseLesson" class="form-select py-9 placeholder-13 text-15">
-                                                <option value="1" disabled selected>Enter course category</option>
-                                                <option value="2">Objectives</option>
-                                                <option value="2">Activities</option>
-                                                <option value="2">Materials</option>
-                                                <option value="2">Timeline</option>
-                                                <option value="2">Take home tasks</option>
-                                                <option value="2">Pedagogical methods</option>
-                                                <option value="2">Teacher's expectations </option>
-                                                <option value="2">Assessment</option>
-                                            </select>
+                                        <div>
+                                            <span class="badge bg-primary">{{producto.price | currency}}</span>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="flex-align justify-content-end gap-8">
-                                <a href="mentor-courses.html" class="btn btn-outline-main rounded-pill py-9">Cancel</a>
-                                <a href="upload-videos.html" class="btn btn-main rounded-pill py-9">Continue</a>
                             </div>
                         </div>
-                    </form>
+                    </div>
+                </form>
+            </div>
+            
+            
+            <!-- Contenido según el paso actual -->
+            <div [ngSwitch]="pasoActual">
+                <!-- Paso 1: Selección de productos -->
+                <div *ngSwitchCase="1">
+                    <!-- Tu código actual de búsqueda y selección de productos -->
+                </div>
+            
+                <!-- Paso 2: Procesar pago -->
+                <div *ngSwitchCase="2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>Resumen de la venta</h3>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Producto</th>
+                                            <th>Cantidad</th>
+                                            <th>Precio</th>
+                                            <th>Subtotal</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let producto of productosSeleccionados">
+                                            <td>{{producto.name}}</td>
+                                            <td>
+                                                <input type="number" 
+                                                       [(ngModel)]="producto.cantidad" 
+                                                       (change)="calcularTotal()"
+                                                       min="1" 
+                                                       class="form-control w-75">
+                                            </td>
+                                            <td>{{producto.price | currency}}</td>
+                                            <td>{{producto.price * producto.cantidad | currency}}</td>
+                                            <td>
+                                                <button class="btn btn-danger btn-sm" 
+                                                        (click)="eliminarProducto(producto)"
+                                                        title="Eliminar producto">
+                                                    <i class="ph ph-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+            
+                            <div class="row justify-content-end mt-4">
+                                <div class="col-md-4">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Subtotal:</span>
+                                        <strong>{{subtotal | currency}}</strong>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>IVA (16%):</span>
+                                        <strong>{{iva | currency}}</strong>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Total:</span>
+                                        <strong>{{total | currency}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+            
+                            <div class="d-flex justify-content-between mt-4">
+                                <button class="btn btn-secondary" (click)="irAPaso(1)">
+                                    <i class="ph ph-arrow-left"></i> Volver
+                                </button>
+                                <button class="btn btn-primary" (click)="irAPaso(3)">
+                                    Proceder al pago <i class="ph ph-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!-- Course Tab End -->
         </div>
+
     </div>
+
 </div>
