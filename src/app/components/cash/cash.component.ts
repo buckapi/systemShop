@@ -67,13 +67,7 @@ export class CashComponent {
     console.log('Productos filtrados:', this.productosFiltrados); // Para debugging
   }
 
-  /* seleccionarProducto(producto: any) {
-    console.log('Producto seleccionado:', producto);
-    // Aquí puedes agregar el producto a tu lista de productos seleccionados
-    this.productosSeleccionados.push(producto);
-    this.searchTerm = ''; // Limpia el campo de búsqueda
-    this.calcularTotal(); // Actualiza el total si es necesario
-  } */
+
     seleccionarProducto(producto: any) {
       this.productosSeleccionados.push({
         ...producto,
